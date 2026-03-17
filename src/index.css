@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,9 +13,83 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: rgb(2 6 23);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Subtle background grid */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(60% 60% at 50% 0%, black 0%, transparent 70%);
+}
+
+/* Ambient blobs */
+.blob {
+  position: absolute;
+  width: 720px;
+  height: 720px;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.35;
+  transform: translateZ(0);
+}
+
+.blob-a {
+  left: -240px;
+  top: -260px;
+  background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.9), rgba(167, 139, 250, 0.25) 60%, transparent 70%);
+}
+
+.blob-b {
+  right: -260px;
+  top: 60px;
+  background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.8), rgba(99, 102, 241, 0.22) 62%, transparent 72%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blob-a {
+    animation: float-a 18s ease-in-out infinite;
+  }
+  .blob-b {
+    animation: float-b 22s ease-in-out infinite;
+  }
+}
+
+@keyframes float-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(60px, 40px, 0) scale(1.05);
+  }
+}
+
+@keyframes float-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-70px, -30px, 0) scale(1.06);
+  }
+}
+
+/* Reveal-on-scroll utility */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: opacity 600ms ease, transform 600ms ease;
 }

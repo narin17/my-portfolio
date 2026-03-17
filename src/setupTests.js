@@ -3,3 +3,17 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// JSDOM doesn't implement IntersectionObserver (used for section highlighting + reveal).
+class IntersectionObserverMock {
+  constructor(callback) {
+    this.callback = callback;
+  }
+  observe = () => {};
+  unobserve = () => {};
+  disconnect = () => {};
+}
+
+if (!global.IntersectionObserver) {
+  global.IntersectionObserver = IntersectionObserverMock;
+}
